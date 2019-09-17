@@ -1,4 +1,4 @@
-# Sudoku
+# Sudoku & Vue
 
 This is a simple sudoku webapp created with Vue.js and robatron/sudoku.js.
 

@@ -11,6 +11,7 @@
   "dependencies": {
     "core-js": "^2.6.5",
     "napa": "^3.0.0",
+    "serialize-javascript": "^2.1.2",
     "vue": "^2.6.10"
   },
   "devDependencies": {

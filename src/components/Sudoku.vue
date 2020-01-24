@@ -111,7 +111,11 @@ export default {
             }
           })
         })
-
+        
+      // fix New Game Btn bug
+      this.activeRow = -1
+      this.activeCol = -1
+      
       this.seconds = 0
       clearInterval(this.timer)
       this.timer = setInterval(() => {

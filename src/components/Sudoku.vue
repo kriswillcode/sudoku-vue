@@ -47,6 +47,10 @@
         {{ value + 1 }}
       </button>
     </div>
+    <div class="row">
+      <button v-on:click="solvePuzzle()">Solve With Backtracking</button>
+      <button v-on:click="generatePuzzle()">New Game</button>
+    </div>  
 
   </div>
 </template>
@@ -96,6 +100,8 @@ export default {
   methods: {
     generatePuzzle () {
       const boardString = sudoku.generate(this.difficulty)
+
+      // make puzzle an array of array of objects
       this.puzzle = sudoku.board_string_to_grid(boardString)
         .map(row => {
           return row.map(cell => {
@@ -111,6 +117,51 @@ export default {
       this.timer = setInterval(() => {
         this.seconds += 1
       }, 1000)
+    },
+    async solvePuzzle () {
+
+      // adjust sleepTime for better visualization
+      let sleepTime = 250;
+      if (this.difficulty === 'easy' || this.difficulty === 'medium') {
+        sleepTime = 250;
+      } else if (this.difficulty === 'hard') {
+        sleepTime = 150;
+      } else if (this.difficulty === 'very-hard') {
+        sleepTime = 70;
+      } else {
+        sleepTime = 30;
+      }
+
+      // backtracking
+      for (let i = 0; i < this.puzzle.length; i++) {
+        for (let j = 0; j < this.puzzle[0].length; j++) {
+          if (this.puzzle[i][j].value !== null) {
+            // the cell is filled
+            continue;
+          }
+
+          // try 1-9 on this empty cell
+          for (let c = 1; c <= 9; c++) {
+            if (!this.isCellInvalid(i, j, c)) {
+
+              await this.sleep(sleepTime);  // visualize the process
+              this.puzzle[i][j].value = c;
+
+              if (await this.solvePuzzle()) {
+                return true;
+              }
+
+              await this.sleep(sleepTime);
+              this.puzzle[i][j].value = null;
+            }
+          }
+          return false;
+        }
+      }
+      return true;
+    },
+    sleep (ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
     },
     setCellActive (row, col, original) {
       if (original) {

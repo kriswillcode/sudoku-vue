@@ -49,6 +49,7 @@
     </div>
     <div class="row">
       <button v-on:click="solvePuzzle()">Solve With Backtracking</button>
+      <button v-on:click="hint()">Show Hint</button>
       <button v-on:click="generatePuzzle()">New Game</button>
     </div>  
 
@@ -63,6 +64,7 @@ export default {
   data () {
     return {
       puzzle: [],
+      solution: [],
       difficulty: 'easy',
       activeRow: -1,
       activeCol: -1,
@@ -111,6 +113,18 @@ export default {
             }
           })
         })
+      
+      // use the solver from sudoku.js to solve, can be used for hint
+      const solutionString = sudoku.solve(boardString);
+      this.solution = sudoku.board_string_to_grid(solutionString)
+        .map(row => {
+          return row.map(cell => {
+            return {
+              value: cell !== '.' ? parseInt(cell) : null,
+              original: cell !== '.'
+            }
+          })
+        })
         
       // fix New Game Btn bug
       this.activeRow = -1
@@ -121,6 +135,16 @@ export default {
       this.timer = setInterval(() => {
         this.seconds += 1
       }, 1000)
+    },
+    hint () {
+      for (let i = 0; i < this.puzzle.length; i++) {
+        for (let j = 0; j < this.puzzle[0].length; j++) {
+          if (this.puzzle[i][j].value !== this.solution[i][j].value) {
+            this.puzzle[i][j].value = this.solution[i][j].value;
+            return;
+          }
+        }
+      }
     },
     async solvePuzzle () {
 

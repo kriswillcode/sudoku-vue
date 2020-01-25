@@ -4,6 +4,8 @@ This is a simple sudoku webapp created with Vue.js and robatron/sudoku.js.
 
 This project is part of a YouTube tutorial channel located at: **TODO**
 
+Play online: https://wokegrdws.github.io/sudoku-vue/
+
 ## Libraries
 
 - [Vue.js](https://github.com/vuejs/vue)

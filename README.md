@@ -2,7 +2,7 @@
 
 This is a simple sudoku webapp created with Vue.js and robatron/sudoku.js.
 
-This project is part of a YouTube tutorial channel located at: **TODO**
+This project is part of a YouTube tutorial channel located at: [https://www.youtube.com/watch?v=oWimqARmM7s](https://www.youtube.com/watch?v=oWimqARmM7s)
 
 ## Libraries
 
